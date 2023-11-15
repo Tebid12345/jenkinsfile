@@ -1,0 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('checkout') {
+            steps {
+                script {
+                    try {
+                        git 'https://github.com/mankinimbom/maven.git'
+                    }catch (Exception e) {
+                        mail bcc: '', body: 'git cloned failed to download', cc: '', from: '', replyTo: '', subject: 'gitclone failed', to: 'michaeltebid1@gmail.com'
+                        Error('checkout failed')
+                    }
+                }
+                
+
+            }
+        }
+        stage('build') {
+            steps {
+                script {
+                    try {
+                        sh "mvn package"
+                    }catch (Exception e) {
+                        mail bcc: '', body: 'git cloned failed to download', cc: '', from: '', replyTo: '', subject: 'gitclone failed', to: 'michaeltebid1@gmail.com'
+                        Error('maven built failed')  
+                    }
+                }
+            }
+        }
+        stage('test') {
+            steps {
+                script {
+                    try {
+                        sh 'mvn test'
+                    }catch (Exception e) {
+                        mail bcc: '', body: 'git cloned failed to download', cc: '', from: '', replyTo: '', subject: 'gitclone failed', to: 'michaeltebid1@gmail.com'
+                        Error('test failed')
+
+                    }
+
+                }
+            }
+        }
+        stage('deplpoyment') {
+            steps {
+                script {
+                    try {
+                        deploy adapters: [tomcat9(credentialsId: 'a468798c-aba4-4e3d-b721-42ac8cb7dd2f', path: '', url: 'http://172.30.87.31:8280')], contextPath: 'deploy', war: '**/*.war'
+                    }catch (Exception e) {
+                        mail bcc: '', body: 'git cloned failed to download', cc: '', from: '', replyTo: '', subject: 'gitclone failed', to: 'michaeltebid1@gmail.com'
+                        Error('failed to deploy')
+                    }
+                }
+            }
+        }
+    }
+}
