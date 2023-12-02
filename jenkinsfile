@@ -24,7 +24,7 @@ pipeline {
                     }catch (Exception e) {
                         mail bcc: '', body: 'git cloned failed to download', cc: '', from: '', replyTo: '', subject: 'gitclone failed', to: 'michaeltebid1@gmail.com'
                         Error('maven built failed')  
-                          echo "new changes have been made on this script"
+                          echo "new change"
                     }
                 }
             }
@@ -57,5 +57,5 @@ pipeline {
         }
     }
 }
-}
+
 
