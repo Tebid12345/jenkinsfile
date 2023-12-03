@@ -24,7 +24,7 @@ pipeline {
                     }catch (Exception e) {
                         mail bcc: '', body: 'git cloned failed to download', cc: '', from: '', replyTo: '', subject: 'gitclone failed', to: 'michaeltebid1@gmail.com'
                         Error('maven built failed')  
-                          echo "new change have been made on this pipeline. All changes should be saved."
+                          echo "new change have been made on this pipeline. All changes should be saved. please save the changes"
                     }
                 }
             }
